@@ -32,12 +32,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print"
     onload="this.media='all'">
+  <link rel="stylesheet" href="assets/app.css">
   <noscript>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   </noscript>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    tailwind.config = {
+    if (window.tailwind) window.tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
@@ -67,7 +68,7 @@
           }
         }
       }
-    }
+    };
   </script>
   <style>
     /* =========================================================================
@@ -460,7 +461,7 @@
 <body class="font-sans min-h-screen antialiased selection:bg-champagne-600/25">
 
   <!-- ===================================================================== -->
-  <!-- MÀN HÃŒNH ĐÃNG NHẬP BẢO MẬT (TOKEN-BASED AUTH)                         -->
+  <!-- MÀN HÌNH ĐÃNG NHẬP BẢO MẬT (TOKEN-BASED AUTH)                         -->
   <!-- ===================================================================== -->
   <div id="pin-login-overlay" class="fixed inset-0 bg-navy-dark/95 backdrop-blur-md z-50 flex items-center justify-center p-4">
     <div class="theme-surface-elevated rounded-3xl max-w-md w-full p-8 text-center border space-y-6">
@@ -1041,7 +1042,7 @@
         </section>
 
         <!-- =============================================================== -->
-        <!-- TAB 4: CẤU HÃŒNH KẾT NỐI GOOGLE APPS SCRIPT                      -->
+        <!-- TAB 4: CẤU HÌNH KẾT NỐI GOOGLE APPS SCRIPT                      -->
         <!-- =============================================================== -->
         <section id="workspace-view-settings" class="hidden max-w-2xl space-y-5">
           <div class="theme-surface rounded-2xl border p-6 space-y-5">
@@ -1502,7 +1503,7 @@
   </div>
 
   <!-- ===================================================================== -->
-  <!-- MODAL CẤU HÃŒNH URL API (MỞ TỪ MÀN HÃŒNH ĐÃNG NHẬP)                     -->
+  <!-- MODAL CẤU HÌNH URL API (MỞ TỪ MÀN HÌNH ĐÃNG NHẬP)                     -->
   <!-- ===================================================================== -->
   <div id="settings-modal" class="fixed inset-0 theme-overlay backdrop-blur-xs z-50 hidden items-center justify-center p-4" onclick="closeSettingsModal()">
     <div class="theme-surface-elevated rounded-3xl max-w-md w-full p-6 border space-y-4" onclick="event.stopPropagation()">
@@ -1706,7 +1707,7 @@
     }
 
     // ---------------------------------------------------------------------
-    // GỌI API GOOGLE APPS SCRIPT (PHÃ'N LOẠI LỖI & ĐỒNG BỘ TIMEOUT)
+    // GỌI API GOOGLE APPS SCRIPT (PHÂN LOẠI LỖI & ĐỒNG BỘ TIMEOUT)
     // ---------------------------------------------------------------------
     function createApiError(message, code = 'DATA_ERROR', extra = {}) {
       const err = new Error(message);
@@ -1957,7 +1958,7 @@
     }
 
     // ---------------------------------------------------------------------
-    // CẤU HÃŒNH URL API (MODAL + TAB CÀI ĐẶT)
+    // CẤU HÌNH URL API (MODAL + TAB CÀI ĐẶT)
     // ---------------------------------------------------------------------
     function openApiConfigModal() { openSettingsModal(); }
 
@@ -3846,7 +3847,7 @@
 
           <div style="display: flex; justify-content: space-between; align-items: center; border: 2px solid #000; padding: 12px; border-radius: 6px; margin-bottom: 16px;">
             <div>
-              <p style="margin: 0; font-size: 13px;">HÃŒNH THỨC THANH TOÁN:</p>
+              <p style="margin: 0; font-size: 13px;">HÌNH THỨC THANH TOÁN:</p>
               <strong style="font-size: 15px;">${escapeHtml(order.paymentMethod || 'COD')}</strong>
             </div>
             <div style="text-align: right;">
@@ -4088,7 +4089,7 @@
     }
 
     // ---------------------------------------------------------------------
-    // TẠO ĐƠN HÀNG THỦ CÃ"NG TẠI QUẦY
+    // TẠO ĐƠN HÀNG THỦ CÔNG TẠI QUẦY
     // ---------------------------------------------------------------------
     function generateUniqueManualOrderCode() {
       const existingCodes = new Set(currentOrders.map(o => String(o.orderCode || '').trim().toUpperCase()));

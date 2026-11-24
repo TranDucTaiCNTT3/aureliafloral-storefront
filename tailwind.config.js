@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './data/**/*.json'],
+  content: ['./index.html', './admin.html', './data/**/*.json'],
   theme: {
     extend: {
       colors: {
