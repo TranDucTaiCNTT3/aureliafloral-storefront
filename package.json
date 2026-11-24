@@ -1,0 +1,17 @@
+{
+  "name": "aureliafloral-storefront",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "clean": "node scripts/clean-dist.mjs",
+    "build:css": "tailwindcss -i ./src/input.css -o ./dist/assets/app.css --minify",
+    "optimize:images": "node scripts/optimize-images.mjs",
+    "copy:static": "node scripts/copy-static.mjs",
+    "build": "npm run clean && npm run build:css && npm run copy:static && npm run optimize:images"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.3",
+    "tailwindcss": "^3.4.17"
+  }
+}
