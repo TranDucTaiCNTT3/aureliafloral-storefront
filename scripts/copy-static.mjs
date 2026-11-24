@@ -9,6 +9,11 @@ const dist = path.join(root, '..', 'dist');
 await cp(path.join(root, '..', 'index.html'), path.join(dist, 'index.html'));
 await cp(path.join(root, '..', 'data'), path.join(dist, 'data'), { recursive: true });
 
+const adminPage = path.join(root, '..', 'admin.html');
+if (existsSync(adminPage)) {
+  await cp(adminPage, path.join(dist, 'admin.html'));
+}
+
 for (const name of ['images', 'assets']) {
   const source = path.join(root, '..', name);
   if (existsSync(source)) await cp(source, path.join(dist, name), { recursive: true, force: true });
