@@ -461,8 +461,9 @@
       #thiet-ke-bien .grid.grid-cols-3 button { padding: 0.5rem 0.35rem !important; font-size: 11px !important; line-height: 1.25 !important; display: flex; align-items: center; justify-content: center; text-align: center; }
       #mode-retail-btn, #mode-wholesale-btn { padding: 0.5rem 0.65rem !important; font-size: 11.5px !important; }
 
-      #floating-support-dock { right: 0.75rem !important; bottom: 0.75rem !important; gap: 0.5rem !important; }
-      #floating-assistant-btn { display: none !important; }
+      #floating-support-dock { right: 0.75rem !important; bottom: 0.75rem !important; gap: 0.45rem !important; }
+      #floating-assistant-btn { padding: 0.38rem 0.65rem !important; font-size: 11px !important; gap: 0.4rem !important; }
+      #floating-assistant-btn > span:last-child { width: 1.55rem !important; height: 1.55rem !important; font-size: 11px !important; }
       #mobile-support-toggle { padding: 0.45rem 0.7rem !important; font-size: 10px !important; }
       #toast-notification { left: 0.75rem !important; right: 0.75rem !important; bottom: auto !important; top: 5.5rem !important; max-width: none !important; }
 
@@ -3004,15 +3005,7 @@
   <div id="floating-support-dock"
     class="fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-40 flex flex-col items-end gap-2.5" style="padding-bottom: env(safe-area-inset-bottom)">
     <div id="mobile-support-menu" class="hidden sm:flex flex-col items-end gap-2">
-      <button type="button" onclick="toggleMobileSupportMenu(); toggleFloralAssistant(true)"
-        class="group flex items-center gap-2 bg-gradient-to-r from-navy-dark to-navy-800 text-white border border-champagne-600/70 shadow-lg rounded-full pl-3.5 pr-3 py-2 text-xs font-bold transition-all"
-        title="Mở Trợ Lý Tư Vấn Chọn Hoa">
-        <span>Tư vấn chọn hoa</span>
-        <span class="w-7 h-7 rounded-full bg-champagne-600 text-navy-dark flex items-center justify-center text-xs">
-          <i class="fa-solid fa-wand-magic-sparkles"></i>
-        </span>
-      </button>
-      <button type="button" onclick="openCallbackModal()"
+      <button type="button" onclick="toggleMobileSupportMenu(false); openCallbackModal()"
         class="group flex items-center gap-2 bg-navy-dark hover:bg-champagne-600 text-white hover:text-navy-dark border border-champagne-600/60 shadow-lg rounded-full pl-3.5 pr-3 py-2 text-xs font-bold transition-all"
         title="Để lại SĐT để cửa hàng gọi lại ngay">
         <span>Yêu cầu gọi lại</span>
@@ -3045,7 +3038,8 @@
       <span id="mobile-support-toggle-label">Hỗ trợ / Gọi lại</span>
     </button>
 
-    <button type="button" id="floating-assistant-btn" onclick="toggleFloralAssistant(true)"
+    <button type="button" id="floating-assistant-btn" onclick="toggleFloralAssistant()"
+      aria-controls="floral-assistant-panel" aria-expanded="false"
       class="group flex items-center gap-2 bg-gradient-to-r from-navy-dark to-navy-800 hover:from-champagne-600 hover:to-champagne-500 text-white hover:text-navy-dark border border-champagne-600/70 shadow-xl rounded-full pl-3.5 pr-2.5 py-2 text-xs font-bold transition-all"
       title="Mở Trợ Lý Tư Vấn Chọn Hoa">
       <span>Tư vấn chọn hoa</span>
@@ -8501,12 +8495,19 @@
     // =====================================================================
     // CỤM HỖ TRỢ NỔI, NÚT LÊN ĐẦU TRANG & CHỨC NĂNG YÊU CẦU GỌI LẠI
     // =====================================================================
-    function toggleMobileSupportMenu() {
+    function toggleMobileSupportMenu(forceState) {
       const menu = document.getElementById('mobile-support-menu');
       const label = document.getElementById('mobile-support-toggle-label');
       const toggle = document.getElementById('mobile-support-toggle');
       if (!menu) return;
-      const willOpen = menu.classList.contains('hidden');
+      if (window.innerWidth >= 640) {
+        menu.classList.add('hidden', 'sm:flex');
+        menu.classList.remove('flex');
+        if (label) label.textContent = 'Hỗ trợ / Gọi lại';
+        if (toggle) toggle.setAttribute('aria-expanded', 'false');
+        return;
+      }
+      const willOpen = typeof forceState === 'boolean' ? forceState : menu.classList.contains('hidden');
       if (willOpen) {
         menu.classList.remove('hidden');
         menu.classList.add('flex');
@@ -8684,8 +8685,11 @@
 
     function toggleFloralAssistant(open) {
       const panel = document.getElementById('floral-assistant-panel');
+      const floatBtn = document.getElementById('floating-assistant-btn');
       if (!panel) return;
-      if (open) {
+      const shouldOpen = typeof open === 'boolean' ? open : panel.classList.contains('hidden');
+      if (shouldOpen) {
+        toggleMobileSupportMenu(false);
         if (!assistantInitialized) {
           resetFloralAssistant();
           assistantInitialized = true;
@@ -8693,12 +8697,14 @@
         syncAssistantCartBar();
         panel.classList.remove('hidden');
         panel.classList.add('flex');
+        if (floatBtn) floatBtn.setAttribute('aria-expanded', 'true');
         syncBodyScrollLock();
         const inp = document.getElementById('assistant-input');
         if (inp && window.innerWidth >= 640) setTimeout(() => inp.focus(), 80);
       } else {
         panel.classList.add('hidden');
         panel.classList.remove('flex');
+        if (floatBtn) floatBtn.setAttribute('aria-expanded', 'false');
         syncBodyScrollLock();
       }
     }
