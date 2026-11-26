@@ -894,9 +894,20 @@ img, video {
 
    @media print {
   @page {
-    size: A6 portrait;
-    margin: 0;
-  }
+  size: A5 portrait;
+  margin: 0;
+}
+
+html,
+body {
+  width: 148mm;
+  height: 210mm;
+}
+
+#print-area {
+  width: 148mm !important;
+  height: 210mm !important;
+}
 
   html,
   body {
@@ -907,28 +918,27 @@ img, video {
     background: #fff !important;
   }
 
-  body * {
-    visibility: hidden !important;
-  }
+  body > *:not(#print-area) {
+  display: none !important;
+}
 
-  #print-area,
-  #print-area * {
-    visibility: visible !important;
-  }
+#print-area,
+#print-area * {
+  visibility: visible !important;
+}
 
   #print-area {
-    display: block !important;
-    position: absolute !important;
-    left: 0 !important;
-    top: 0 !important;
-    width: 105mm !important;
-    height: 148mm !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: hidden !important;
-    background: #fff !important;
-    color: #0b192c !important;
-  }
+  display: block !important;
+  position: fixed !important;
+  inset: 0 !important;
+  width: 105mm !important;
+  height: 148mm !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  background: #fff !important;
+  color: #0b192c !important;
+}
 
   .shipping-label-a6 {
     box-sizing: border-box;
